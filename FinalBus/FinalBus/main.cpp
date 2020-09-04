@@ -1,15 +1,14 @@
 #include"Bus.h"
 
+
+
+
 int main()
 {
+	int count = 0;
+	//ResizeConsole(900, 700);
+	FixConsoleWindow();
 	BusStation a;
-//Create Admin Account && Log In 
-	//a.setAdmin();
-	//a.logInForAdmin();
-
-	a.Install();
-	a.Rev();
-	a.saveInfoIntoHistory();
+	a.AdminMenu();
 	system("pause");
-	return 0;
 }
