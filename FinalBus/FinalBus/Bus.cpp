@@ -809,3 +809,9 @@ void BusStation::AdminMenu()
 	Draw("AdminSetup");
 	AddCar();
 }
+
+void BusStation::CustomerMenu()
+{
+	Draw("Customer Reservation");
+	Rev();
+}

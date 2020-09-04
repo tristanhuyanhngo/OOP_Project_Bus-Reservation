@@ -216,6 +216,6 @@ public:
     void readFeedback(int serial);
     int showMoney(int serial);
     int showGoods(int serial);
-    void MENU();
+    void CustomerMenu();
 	void AdminMenu();
 };

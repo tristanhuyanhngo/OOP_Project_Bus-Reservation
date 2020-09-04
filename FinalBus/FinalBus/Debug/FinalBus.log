@@ -1,9 +1,0 @@
-﻿  Bus.cpp
-D:\Tristan\QST\First Year\Third Semester\OOP\Labs\Project\OOP_Project_Bus-Reservation\FinalBus\FinalBus\Bus.cpp(407,20): warning C4018: '<': signed/unsigned mismatch
-D:\Tristan\QST\First Year\Third Semester\OOP\Labs\Project\OOP_Project_Bus-Reservation\FinalBus\FinalBus\Bus.cpp(449,21): warning C4018: '<': signed/unsigned mismatch
-D:\Tristan\QST\First Year\Third Semester\OOP\Labs\Project\OOP_Project_Bus-Reservation\FinalBus\FinalBus\Bus.cpp(437,7): warning C4101: 'key': unreferenced local variable
-D:\Tristan\QST\First Year\Third Semester\OOP\Labs\Project\OOP_Project_Bus-Reservation\FinalBus\FinalBus\Bus.cpp(593,20): warning C4018: '<': signed/unsigned mismatch
-D:\Tristan\QST\First Year\Third Semester\OOP\Labs\Project\OOP_Project_Bus-Reservation\FinalBus\FinalBus\Bus.cpp(602,20): warning C4018: '<': signed/unsigned mismatch
-D:\Tristan\QST\First Year\Third Semester\OOP\Labs\Project\OOP_Project_Bus-Reservation\FinalBus\FinalBus\Bus.cpp(592,5): warning C4102: 'top1': unreferenced label
-D:\Tristan\QST\First Year\Third Semester\OOP\Labs\Project\OOP_Project_Bus-Reservation\FinalBus\FinalBus\Bus.cpp(473): warning C4715: 'BusStation::logInForAdmin': not all control paths return a value
-  FinalBus.vcxproj -> D:\Tristan\QST\First Year\Third Semester\OOP\Labs\Project\OOP_Project_Bus-Reservation\FinalBus\Debug\FinalBus.exe
