@@ -1,9 +1,49 @@
 ﻿#include"Bus.h"
 
+void FixConsoleWindow()
+{
+	HWND consoleWindow = GetConsoleWindow();
+	LONG style = GetWindowLong(consoleWindow, GWL_STYLE);
+	style = style & ~(WS_MAXIMIZEBOX) & ~(WS_THICKFRAME);
+	SetWindowLong(consoleWindow, GWL_STYLE, style);
+}
+
+void GotoXY(int x, int y)
+{
+	COORD coord;
+	coord.X = x;
+	coord.Y = y;
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+}
+
+void ResizeConsole(int width, int height)
+{
+	HWND console = GetConsoleWindow();
+	RECT r;
+	GetWindowRect(console, &r);
+	MoveWindow(console, r.left, r.top, width, height, TRUE);
+}
+
 void vline(char ch = '-')
 {
 	for (int i = 80; i > 0; i--)
 		cout << ch;
+}
+
+void Draw(string Option)
+{
+	for (int i = 0; i < 48; i++)
+	{
+		GotoXY(i, 1);
+		cout << "\xCD";
+	}
+	for (int i = 62; i < 120; i++)
+	{
+		GotoXY(i, 1);
+		cout << "\xCD";
+	}
+	GotoXY(50, 1);
+	cout << Option << endl;
 }
 
 //BUS
@@ -79,6 +119,7 @@ void Bus::SetSeats()
 
 void Bus::Install()// FOR ADMIN ONLY 
 {
+
 	cout << "Enter Bus No: ";
 	cin >> Number;
 	cin.ignore();
@@ -485,22 +526,32 @@ bool BusStation::logInForAdmin(int &serial)
 	}
 }
 
-void BusStation::Install()
-{
-	int choice;
 
+
+void BusStation::AddCar()
+{
+	
+	int choice;
 	while (true)
 	{
-		cout << "Chon loai xe ban muon Tao: " << endl;
-		cout << "1. Xe khach ngoi " << endl;
-		cout << "2. Xe giuong nam " << endl;
-		cout << "3. Xe Vip " << endl;
-		cout << "4. Xe Rieng, Tai xe rieng" << endl;
+		Draw("AdminSetup");
+		GotoXY(40, 4);
+		cout << "Enter type of Bus you want to Create " << endl;
+		GotoXY(50, 6);
+		cout << "1. Regular Bus " << endl;
+		GotoXY(50, 8);
+		cout << "2. Bed Car " << endl;
+		GotoXY(50, 10);
+		cout << "3. Vip " << endl;
+		GotoXY(50, 12);
+		cout << "4. Private Bus" << endl;
+		GotoXY(50, 14);
 		cout << "5. Exit" << endl;
-
-		cout << "Lua chon cua ban la: ";
+		GotoXY(50, 16);
+		cout << "Choice: ";
 		cin >> choice;
 		cin.ignore();
+		
 		if (choice == 5)
 		{
 			system("pause");
@@ -512,17 +563,21 @@ void BusStation::Install()
 		{
 		case 1:
 		{
+			Draw("AdminSetup");
 			int Num;
-			cout << "ADMIN SETUP" << endl;
 			cout << "Enter the number of bus you want to Install: ";
 			cin >> Num;
 			cin.ignore();
+			cout << endl << endl;
 			for (int i = 0; i < Num; i++)
 			{
 				Bus a;
-				//a.Install();
+				a.Install();
 				_bus.push_back(new Bus(a));
-				//system("cls");
+				system("pause");
+				system("cls");
+				
+				Draw("AdminSetup");
 			}
 			cout << endl;
 			system("pause");
@@ -532,17 +587,21 @@ void BusStation::Install()
 		}
 		case 2:
 		{
+			Draw("AdminSetup");
 			int Num;
-			cout << "ADMIN SETUP" << endl;
 			cout << "Enter number bus you want to Install: ";
 			cin >> Num;
 			cin.ignore();
+			cout << endl << endl;
 			for (int i = 0; i < Num; i++)
 			{
 				Bed_Car b(i + 1);
-				//b.Install();
+				b.Install();
 				addBed_car(b);
-				//system("cls");
+				system("pause");
+				system("cls");
+
+				Draw("AdminSetup");
 			}
 
 			cout << endl;
@@ -553,38 +612,44 @@ void BusStation::Install()
 		}
 		case 3:
 		{
+			Draw("AdminSetup");
 			int Num;
-			cout << "ADMIN SETUP" << endl;
 			cout << "Enter number bus you want to Install: ";
 			cin >> Num;
 			cin.ignore();
 			for (int i = 0; i < Num; i++)
 			{
 				VIP c(i + 1);
-				//c.Install();
+				c.Install();
 				addVip(c);
-				//system("cls");
-			}
+				system("pause");
+				system("cls");
+
+				Draw("AdminSetup");
+			};
 
 			cout << endl;
 			system("pause");
 			system("cls");
-
 			break;
 		}
 		case 4:
 		{
+			Draw("AdminSetup");
 			int Num;
-			cout << "ADMIN SETUP" << endl;
 			cout << "Enter number bus you want to Install: ";
 			cin >> Num;
 			cin.ignore();
+			cout << endl << endl;
 			for (int i = 0; i < Num; i++)
 			{
 				SuperVip d(i + 1);
-				//b.Install();
+				d.Install();
 				addVipCar(d);
-				//system("cls");
+				system("pause");
+				system("cls");
+
+				Draw("AdminSetup");
 			}
 
 			cout << endl;
@@ -739,12 +804,8 @@ int BusStation::showGoods(int serial)
 	return totalOfGoods;
 }
 
-void OptionInstall()
+void BusStation::AdminMenu()
 {
-
-}
-
-void OptionRev()
-{
-
+	Draw("AdminSetup");
+	AddCar();
 }

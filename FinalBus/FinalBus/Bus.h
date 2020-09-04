@@ -4,6 +4,7 @@
 #include <string>
 #include <cstdlib>
 #include <vector>
+#include <Windows.h>
 #define _CRT_SECURE_NO_WARNINGS
 #pragma warning(disable:4996)
 using namespace std;
@@ -11,6 +12,13 @@ using namespace std;
 const int priceGoods = 10000;
 static int P = 0;
 static int Q = 1;
+
+
+void ResizeConsole(int width, int height);
+void FixConsoleWindow();
+
+void GotoXY(int x, int y);
+
 
 class Date
 {
@@ -172,8 +180,6 @@ public:
     SuperVip(int num);
 };
 
-void OptionInstall();
-void OptionRev();
 
 class Admin
 {
@@ -204,10 +210,12 @@ public:
     void addBed_car(Bed_Car a);
     void addVip(VIP b);
     void addVipCar(SuperVip c);
-    void Install();
+    void AddCar();
     void Rev();
     void saveInfoIntoHistory(int serial);
     void readFeedback(int serial);
     int showMoney(int serial);
     int showGoods(int serial);
+    void MENU();
+	void AdminMenu();
 };
