@@ -495,6 +495,7 @@ bool BusStation::logInForAdmin(int &serial)
 	string password = "";
 
 	while (!validateAdmin) {
+		Draw("Log In For Admin  ");
 		cout << "Username: ";
 		getline(cin, username);
 		fflush(stdin);
@@ -516,7 +517,6 @@ bool BusStation::logInForAdmin(int &serial)
 		if (numberOfWrongInput == 3) {
 			system("cls");
 			cout << "You have entered wrong Username or Password 3 times ! Please press Enter to exit program ! " << "\n";
-			system("pause");
 			return false;
 		}
 
@@ -664,6 +664,7 @@ void BusStation::AddCar()
 
 void BusStation::Rev()
 {
+	Draw("Customer Reservation");
 	int Bus_no;
 	cout << "CUSTOMER: " << endl;
 	cout << "Buses availabile: " << endl;
@@ -804,10 +805,81 @@ int BusStation::showGoods(int serial)
 	return totalOfGoods;
 }
 
-void BusStation::AdminMenu()
-{
-	Draw("AdminSetup");
-	AddCar();
+void BusStation::AdminMenu(){
+	int choice = 0;
+	int role = 0;
+	while (role != 3) {
+		Draw("Bus Reservation System  ");
+		GotoXY(50, 4);
+		cout << "1. User " << endl;
+		GotoXY(50, 6);
+		cout << "2. Admin " << endl;
+		GotoXY(50, 8);
+		cout << "3. Exit " << endl;
+		GotoXY(50, 10);
+		cout << "Your choice: ";
+		cin >> role;
+
+		if (role == 3) {
+			break;
+		}
+		else if (role == 1) {
+
+		}
+		else if (role == 2) {
+			setAdmin();
+			if (logInForAdmin(serial)) {
+				system("cls");
+				while (choice != 6) {
+					Draw("Admin Setup");
+					GotoXY(50, 4);
+					cout << "1. Add car " << endl;
+					GotoXY(50, 6);
+					cout << "2. Install bus information " << endl;
+					GotoXY(50, 8);
+					cout << "3. Show money - Show person " << endl;
+					GotoXY(50, 10);
+					cout << "4. Check goods" << endl;
+					GotoXY(50, 12);
+					cout << "5. Read history" << endl;
+					GotoXY(50, 14);
+					cout << "6. Exit" << endl;
+					GotoXY(50, 16);
+					cout << "Your choice: ";
+					cin >> choice;
+					switch (choice) {
+					case 1:
+						system("cls");
+						AddCar();
+						break;
+					case 2:
+						system("cls");
+						Rev();
+						break;
+					case 3:
+						system("cls");
+						cout << showMoney(serial) << "\n";
+						system("pause");
+						break;
+					case 4:
+						system("cls");
+						cout << showGoods(serial) << "\n";
+						system("pause");
+						break;
+					case 5:
+						system("cls");
+						readFeedback(serial);
+						break;
+					case 6:
+						break;
+					};
+					system("cls");
+				}
+			}
+		}
+		system("cls");
+	}
+	system("cls");
 }
 
 void BusStation::CustomerMenu()

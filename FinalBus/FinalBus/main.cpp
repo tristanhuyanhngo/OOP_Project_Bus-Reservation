@@ -8,6 +8,5 @@ int main()
 	FixConsoleWindow();
 	BusStation a;
 	a.AdminMenu();
-	a.CustomerMenu();
 	system("pause");
 }
