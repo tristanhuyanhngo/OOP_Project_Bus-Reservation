@@ -1,0 +1,17 @@
+Làm menu cho admin
+
+sau khi đăng nhập thành công, thì sẽ hiện ra các chức năng
+1.Add Car (KHOA)
+2.Install Bus Information (KHOA)
+3.Show Money - Show person (HUY ANH)
+4.Check Goods (HUY ANH)
+5.Read history (HUY ANH)
+
+
+Lưu ý: giờ ta sẽ không cần biết admin nào quản lý xe nào ,ta chỉ cần add vô
+và history sẽ random vô 4 admin, khi người dùng mua vé nhập thông tin xe
+Ta phải check thử số xe đó có tồn tại trong BusStation không thông qua vector<Bus*>
+rồi mới làm tiếp.
+
+hạn nộp T4 tuần sau 12/09/2020
+
