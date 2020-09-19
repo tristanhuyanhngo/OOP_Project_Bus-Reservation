@@ -497,10 +497,10 @@ bool BusStation::logInForAdmin(int &serial)
 	while (!validateAdmin) {
 		Draw("Log In For Admin  ");
 		cout << "Username: ";
-		getline(cin, username);
-		fflush(stdin);
+		cin >> username;
+		// fflush(stdin);
 		cout << "Password: ";
-		getline(cin, password);
+		cin >> password;
 		for (int i = 0; i < _ad.size(); i++) {
 			if (_ad[i].getUsername() == username && _ad[i].getPassword() == password) {
 				serial = i;
@@ -806,10 +806,11 @@ int BusStation::showGoods(int serial)
 }
 
 void BusStation::AdminMenu(){
-	int choice = 0;
-	int role = 0;
+
+	int choiceForAdmin = 0, choiceForUser = 0, role = 0;
+
 	while (role != 3) {
-		Draw("Bus Reservation System  ");
+		Draw("BUS RESERVATION SYSTEM ");
 		GotoXY(50, 4);
 		cout << "1. User " << endl;
 		GotoXY(50, 6);
@@ -824,58 +825,88 @@ void BusStation::AdminMenu(){
 			break;
 		}
 		else if (role == 1) {
+			system("cls");
+			while (choiceForUser != 6) {
+				Draw("User Reservation");
+				GotoXY(50, 4);
+				cout << "1. Sign Up " << endl;
+				GotoXY(50, 6);
+				cout << "2. Log In " << endl;
+				GotoXY(50, 8);
+				cout << "3. Book Ticket(s) " << endl;
+				GotoXY(50, 10);
+				cout << "4. Show Information Of Ticket(s) " << endl;
+				GotoXY(50, 12);
+				cout << "5. Add Feedback " << endl;
+				GotoXY(50, 14);
+				cout << "6. Exit " << endl;
+				GotoXY(50, 14);
+				cout << "Your choice: ";
+				cin >> choiceForUser;
 
+				switch (choiceForUser) {
+				case 1:
+					system("cls");
+					break;
+				case 2:
+					system("cls");
+					break;
+				case 3:
+					system("cls");
+					Rev();
+					break;
+				case 4:
+					system("cls");
+					break;
+				case 5:
+					system("cls");
+					break;
+				default:
+					break;
+				};
+			}
 		}
 		else if (role == 2) {
+			system("cls");
 			setAdmin();
 			if (logInForAdmin(serial)) {
 				system("cls");
-				while (choice != 6) {
+				while (choiceForAdmin != 5) {
 					Draw("Admin Setup");
 					GotoXY(50, 4);
-					cout << "1. Add car " << endl;
+					cout << "1. Add Bus " << endl;
 					GotoXY(50, 6);
-					cout << "2. Install bus information " << endl;
+					cout << "2. Show Information Of Bus(es) " << endl;
 					GotoXY(50, 8);
-					cout << "3. Show money - Show person " << endl;
+					cout << "3. Show Information Of Passenger(s) " << endl;
 					GotoXY(50, 10);
-					cout << "4. Check goods" << endl;
-					GotoXY(50, 12);
-					cout << "5. Read history" << endl;
+					cout << "4. Log Out " << endl;
+					GotoXY(50, 10);
+					cout << "5. Exit" << endl;
 					GotoXY(50, 14);
-					cout << "6. Exit" << endl;
-					GotoXY(50, 16);
 					cout << "Your choice: ";
-					cin >> choice;
-					switch (choice) {
+					cin >> choiceForAdmin;
+					switch (choiceForAdmin) {
 					case 1:
 						system("cls");
 						AddCar();
 						break;
 					case 2:
 						system("cls");
-						Rev();
 						break;
 					case 3:
 						system("cls");
-						cout << showMoney(serial) << "\n";
-						system("pause");
 						break;
 					case 4:
 						system("cls");
-						cout << showGoods(serial) << "\n";
-						system("pause");
 						break;
-					case 5:
-						system("cls");
-						readFeedback(serial);
-						break;
-					case 6:
+					default:
 						break;
 					};
 					system("cls");
 				}
 			}
+			system("pause");
 		}
 		system("cls");
 	}

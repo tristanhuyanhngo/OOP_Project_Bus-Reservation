@@ -204,7 +204,7 @@ private:
     vector<Bus*> _bus;
     vector<User> _user;
 public:
-    void printOutAccount(); // Print Account 
+    void printOutAccount(); // In thông tin Admin account ra để kiểm tra
     void setAdmin();
     bool logInForAdmin(int &serial);
     void addBed_car(Bed_Car a);
