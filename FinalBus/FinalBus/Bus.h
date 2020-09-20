@@ -31,27 +31,11 @@ public:
     void output();
 };
 
-class Ticket
-{
-protected:
-    string _nameOfTrip;
-    Date _date;
-    int _price;
-    int _goods;
-
-public:
-    Ticket();
-    void input();
-    void output();
-    int getPrice();
-};
-
-class Person
-{
+class Person {
 protected:
     string _name, _sex;
-    int _age;
-    string _tel;
+    string _yearOfBirth;
+    string _telephone;
     string _email;
 
 public:
@@ -60,36 +44,52 @@ public:
     void output();
 };
 
-class User : public Person
-{
-protected:
-    int _number;
-    vector<Ticket> _ticket;
-    int _sumPrice;
-    string _feedback;
+class Ticket {
+private:
+    Date _date;
+    string _nameOfTrip;
+    vector<string> seatNumbers;
+
 public:
-    User();
-    void input();
-    void output();
+    // Defalt Constructor
+    Ticket();
+
+    // Set Attributes
+    void setSeatNumbers(vector<string> seatNumber);
+    void setNameOfTrip(string nameOfTrip);
+    void setDate(Date date);
+
+    // Get Attributes
+
 };
 
-class History {
+class User : public Person {
 protected:
-    string _name;
-    string _tel;
+    string username;
+    string password;
     int _goods;
-    int _payment;
+    int _totalOfMoney;
     string _feedback;
-    string _typebus;
+    string _typeOfBus;
+    Ticket _ticket;
+
 public:
-    History();
-    void setName(string name);
-    void setTelephone(string telephone);
-    void setFeedback(string feedback);
-    string getFeedback();
-    int getPayment();
-    int getGoods();
-    void print();
+    // Default Constructor
+    User();
+
+    // Method
+    void input();
+    void output();
+
+    // Get Attributes
+    string getNameUser();
+    
+    // Set Attributes
+    void setWeightOfGoods(int weight);
+    void setTypeOfBus(string typeOfBus);
+    void setTotalOfMoney(int totalOfMoney);
+    void addFeedBack(string feedback);
+    void setForTicket();
 };
 
 class Bus
@@ -109,7 +109,7 @@ public:
     int Number;
     void SetSeats();
     void Install();
-    void Reserve();
+    void Reserve(User &user);
     void Show();
     virtual void ShowName()
     {
@@ -122,6 +122,7 @@ public:
     void ShowSeat();
     bool CheckEmpty(int No);
     void NameRev(string name, int Seat);
+    string getTypeOfBus();
     Bus();
 };
 
@@ -181,41 +182,53 @@ public:
 };
 
 
-class Admin
-{
+class Admin {
 private:
     string _username;
     string _password;
-    vector<History> _history;
+
 public:
     void setUsername(string str);
     void setPassword(string str);
     string getUsername();
     string getPassword();
-    void addHistory(History history);
-    vector<History> getHistory();
 };
 
-class BusStation
-{
+class BusStation {
 private:
-    int serial; // Serial Admin -> Xem Admin nào phụ trách những xe nào, những hành khách nào
+    // Admin
     vector<Admin> _ad;
+    int serial; // Serial Admin -> Xem Admin nào phụ trách những xe nào, những hành khách nào
+    void setAdmin(); // Khởi tạo Account của 4 Admin
+    void printOutAccount(); //  (TEST) In thông tin Admin account ra để kiểm tra
+    
+    // Bus
     vector<Bus*> _bus;
+    
+    // User
     vector<User> _user;
+    
+    // Ticket
+    vector<Ticket> _ticket;
+
 public:
-    void printOutAccount(); // In thông tin Admin account ra để kiểm tra
-    void setAdmin();
-    bool logInForAdmin(int &serial);
+    // Default Constructor
+    BusStation();
+
+    // Admin
+    bool logInForAdmin();
+    
+    // User
+    void TestUser_Input();
+    void addUser();
+
+    // Bus
     void addBed_car(Bed_Car a);
     void addVip(VIP b);
     void addVipCar(SuperVip c);
     void AddCar();
     void Rev();
-    void saveInfoIntoHistory(int serial);
-    void readFeedback(int serial);
-    int showMoney(int serial);
-    int showGoods(int serial);
-    void CustomerMenu();
-	void AdminMenu();
+    
+    // Menu
+	void CustomerMenu();
 };
