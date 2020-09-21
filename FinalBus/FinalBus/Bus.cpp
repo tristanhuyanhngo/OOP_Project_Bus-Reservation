@@ -144,8 +144,7 @@ void Bus::Install()// FOR ADMIN ONLY
 	cin >> Row >> Col;
 	cin.ignore();
 	SetSeats();
-	seat_max = Row * Col;
-
+	seatEmpty = seat_max = Row * Col;
 	cout << "\nEnter Discount Voucher code: ";
 	getline(cin, Voucher);
 
@@ -191,12 +190,16 @@ void Bus::ShowSeat()
 
 void Bus::Show()// Show for Customer
 {
+	if (seatEmpty == 0) {
+		return;
+	}
+
 	cout << "Bus No: " << Number << endl;
 	ShowName();
 	cout << "Driver: " << Driver << endl;
 	cout << "Going From " << From << " To " << To << endl;
 	cout << "Departure time: " << Departure << endl;
-	cout << "Seat Available: " << seat_max << endl;
+	cout << "Seat Available: " << seatEmpty << endl;
 	ShowPrice();
 }
 
@@ -232,12 +235,22 @@ string Bus::getTypeOfBus()
 	return _name;
 }
 
+string Bus::getNameOfTrip()
+{
+	return From + " To " + To;
+}
+
 void Bus::Reserve(User &user)// For Customer
 {
 	int Seat_no, num_of_people, Weight;
 	int bill;
 	string customer_Voucher, haystack;
 	vector<string>s_seats;
+	
+	if (seatEmpty == 0) {
+		cout << "Sorry! All of seats has already taken ! ";
+		return;
+	}
 
 	cout << "What seat(s) you want to Reverse (You can pick multiple seat): ";
 	getline(cin, haystack);
@@ -259,10 +272,9 @@ void Bus::Reserve(User &user)// For Customer
 			goto top;
 		}
 
-		if (CheckEmpty(Seat_no))
-		{
+		if (CheckEmpty(Seat_no)) {
 			NameRev(user.getNameUser(), Seat_no);
-			seat_max--;
+			seatEmpty--;
 		}
 		else
 		{
@@ -286,7 +298,7 @@ void Bus::Reserve(User &user)// For Customer
 		bill /= 2;
 	}
 	user.setTotalOfMoney(bill);
-	user.setForTicket();
+	user.setSeatNumbersForTicket(s_seats);
 }
 
 
@@ -318,6 +330,8 @@ Person::Person()
 
 void Person::input()
 {
+	cin.ignore();
+
 	cout << "\nEnter Your Full Name: ";
 	getline(cin, _name);
 
@@ -338,10 +352,7 @@ void Person::input()
 void Person::output()
 {
 	cout << "Name: " << _name << endl;
-	cout << "Gender: " << _sex << endl;
-	cout << "Year of Birth: " << _yearOfBirth << endl;
 	cout << "Telephone: " << _telephone << endl;
-	cout << "Email: " << _email << endl;
 }
 
 //User
@@ -359,9 +370,9 @@ void User::input()
 void User::output()
 {
 	Person::output();
-	cout << "- TRIP: " << endl;
-	cout << "==> TOTAL OF MONEY = " << _totalOfMoney;
-	cout << endl;
+	cout << "Type of Bus: " << _typeOfBus << endl;
+	_ticket.output();
+	cout << "Total Of Money: " << _totalOfMoney << endl;
 }
 
 string User::getNameUser()
@@ -389,8 +400,14 @@ void User::addFeedBack(string feedback)
 	_feedback = feedback;
 }
 
-void User::setForTicket()
+void User::setSeatNumbersForTicket(vector<string> seatNumbers)
 {
+	_ticket.setSeatNumbers(seatNumbers);
+}
+
+void User::setNameOfTrip(string nameOfTrip)
+{
+	_ticket.setNameOfTrip(nameOfTrip);
 }
 
 // Tickets
@@ -413,6 +430,16 @@ void Ticket::setNameOfTrip(string nameOfTrip)
 void Ticket::setDate(Date date)
 {
 	_date = date;
+}
+
+void Ticket::output()
+{
+	cout << "Name of Trip: " << _nameOfTrip << endl;
+	cout << "Seat Number(s): ";
+	for (int i = 0; i < seatNumbers.size(); i++) {
+		cout << seatNumbers[i] << " ";
+	}
+	cout << endl;
 }
 
 // BusStation
@@ -512,6 +539,19 @@ void BusStation::addUser()
 	person.input();
 
 	_user.push_back(person);
+}
+
+void BusStation::showTicketOfUser()
+{
+	_user[_user.size() - 1].output();
+}
+
+void BusStation::showPassenger()
+{
+	for (int i = 0; i < _user.size(); i++) {
+		_user[i].output();
+		cout << "\n";
+	}
 }
 
 void BusStation::AddCar()
@@ -667,6 +707,8 @@ top1:
 	{
 		if (_bus[i]->Number == Bus_no)
 		{
+			_user[_user.size() - 1].setTypeOfBus(_bus[i]->getTypeOfBus());
+			_user[_user.size() - 1].setNameOfTrip(_bus[i]->getNameOfTrip());
 			system("cls");
 			_bus[i]->ShowSeat();
 			_bus[i]->Reserve(_user[_user.size()-1]);
@@ -682,6 +724,16 @@ top1:
 		}
 	}
 
+}
+
+void BusStation::showBus()
+{
+	cout << "Buses availabile: " << endl;
+	for (int i = 0; i < _bus.size(); i++)
+	{
+		_bus[i]->Show();
+		cout << endl;
+	}
 }
 
 //Admin
@@ -741,20 +793,16 @@ void BusStation::CustomerMenu(){
 		} 
 		else if (role == 1) {
 			system("cls");
-			while (choiceForUser != 6) {
+			while (choiceForUser != 4) {
 				Draw("User Reservation");
 				GotoXY(50, 4);
-				cout << "1. Sign Up " << endl;
-				GotoXY(50, 6);
-				cout << "2. Log In " << endl;
-				GotoXY(50, 8);
-				cout << "3. Book Ticket(s) " << endl;
+				cout << "1. Book Ticket(s) " << endl;
 				GotoXY(50, 10);
-				cout << "4. Show Information Of Ticket(s) " << endl;
+				cout << "2. Show Information Of Ticket(s) " << endl;
 				GotoXY(50, 12);
-				cout << "5. Add Feedback " << endl;
+				cout << "3. Add Feedback " << endl;
 				GotoXY(50, 14);
-				cout << "6. Exit " << endl;
+				cout << "4. Exit " << endl;
 				GotoXY(50, 16);
 				cout << "Your choice: ";
 				cin >> choiceForUser;
@@ -762,20 +810,17 @@ void BusStation::CustomerMenu(){
 				switch (choiceForUser) {
 				case 1:
 					system("cls");
+					Draw("Customer Reservation");
+					addUser();
+					system("cls");
+					Rev();
 					break;
 				case 2:
 					system("cls");
+					showTicketOfUser();
+					system("pause");
 					break;
 				case 3:
-					system("cls");
-					Draw("Customer Reservation");
-					addUser();
-					Rev();
-					break;
-				case 4:
-					system("cls");
-					break;
-				case 5:
 					system("cls");
 					break;
 				default:
@@ -812,9 +857,13 @@ void BusStation::CustomerMenu(){
 						break;
 					case 2:
 						system("cls");
+						showBus();
+						system("pause");
 						break;
 					case 3:
 						system("cls");
+						showPassenger();
+						system("pause");
 						break;
 					case 4:
 						system("cls");

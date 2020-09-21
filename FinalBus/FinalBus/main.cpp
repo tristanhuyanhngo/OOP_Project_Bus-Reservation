@@ -7,8 +7,6 @@ int main()
 	
 	FixConsoleWindow();
 	BusStation a;
-	// a.AdminMenu();
-	// a.TestUser_Input();
-
+	a.CustomerMenu();
 	system("pause");
 }

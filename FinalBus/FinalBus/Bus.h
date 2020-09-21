@@ -61,6 +61,8 @@ public:
 
     // Get Attributes
 
+    // Output
+    void output();
 };
 
 class User : public Person {
@@ -89,7 +91,9 @@ public:
     void setTypeOfBus(string typeOfBus);
     void setTotalOfMoney(int totalOfMoney);
     void addFeedBack(string feedback);
-    void setForTicket();
+    void setSeatNumbersForTicket(vector<string> seatNumbers);
+    void setNameOfTrip(string nameOfTrip);
+
 };
 
 class Bus
@@ -101,11 +105,13 @@ protected:
     string From;
     string To;
     int seat_max;
+    int seatEmpty;
     int Row, Col;
     vector<vector<string>>Seats;
     string Driver;
     string Voucher;
 public:
+    
     int Number;
     void SetSeats();
     void Install();
@@ -123,6 +129,7 @@ public:
     bool CheckEmpty(int No);
     void NameRev(string name, int Seat);
     string getTypeOfBus();
+    string getNameOfTrip();
     Bus();
 };
 
@@ -221,6 +228,8 @@ public:
     // User
     void TestUser_Input();
     void addUser();
+    void showTicketOfUser();
+    void showPassenger();
 
     // Bus
     void addBed_car(Bed_Car a);
@@ -228,7 +237,8 @@ public:
     void addVipCar(SuperVip c);
     void AddCar();
     void Rev();
-    
+    void showBus();
+
     // Menu
 	void CustomerMenu();
 };
