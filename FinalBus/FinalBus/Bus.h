@@ -85,7 +85,7 @@ public:
 
     // Get Attributes
     string getNameUser();
-    
+
     // Set Attributes
     void setWeightOfGoods(int weight);
     void setTypeOfBus(string typeOfBus);
@@ -93,6 +93,7 @@ public:
     void addFeedBack(string feedback);
     void setSeatNumbersForTicket(vector<string> seatNumbers);
     void setNameOfTrip(string nameOfTrip);
+    string getFeedBack();
 
 };
 
@@ -111,19 +112,19 @@ protected:
     string Driver;
     string Voucher;
 public:
-    
+
     int Number;
     void SetSeats();
     void Install();
-    void Reserve(User &user);
+    void Reserve(User& user);
     void Show();
     virtual void ShowName()
     {
-        cout << "Type bus: " << _name << endl;
+        cout << "\t\t\tType bus: " << _name << endl;
     }
     virtual void ShowPrice()
     {
-        cout << "Price per ticket: 200,000 VND" << endl;
+        cout << "\t\t\tPrice per ticket: 200,000 VND" << endl;
     }
     void ShowSeat();
     bool CheckEmpty(int No);
@@ -146,11 +147,11 @@ private:
 public:
     void ShowName()
     {
-        cout << "Type bus: " << _name << endl;
+        cout << "\t\t\tType bus: " << _name << endl;
     }
     void ShowPrice()
     {
-        cout << "Price per ticket: 400,000 VND" << endl;
+        cout << "\t\t\tPrice per ticket: 400,000 VND" << endl;
     }
 
     Bed_Car(int num);
@@ -165,11 +166,11 @@ private:
 public:
     void ShowName()
     {
-        cout << "Type bus: " << _name << endl;
+        cout << "\t\t\tType bus: " << _name << endl;
     }
     void ShowPrice()
     {
-        cout << "Price per ticket: 3,000,000 VND" << endl;
+        cout << "\t\t\tPrice per ticket: 3,000,000 VND" << endl;
     }
     VIP(int num);
 };
@@ -182,11 +183,11 @@ private:
 public:
     void ShowName()
     {
-        cout << "Type bus: " << _name << endl;
+        cout << "\t\t\tType bus: " << _name << endl;
     }
     void ShowPrice()
     {
-        cout << "Price per ticket: 10,000,000 VND" << endl;
+        cout << "\t\t\tPrice per ticket: 10,000,000 VND" << endl;
     }
     SuperVip(int num);
 };
@@ -211,13 +212,13 @@ private:
     int serial; // Serial Admin -> Xem Admin nào phụ trách những xe nào, những hành khách nào
     void setAdmin(); // Khởi tạo Account của 4 Admin
     void printOutAccount(); //  (TEST) In thông tin Admin account ra để kiểm tra
-    
+
     // Bus
     vector<Bus*> _bus;
-    
+
     // User
     vector<User> _user;
-    
+
     // Ticket
     vector<Ticket> _ticket;
 
@@ -227,13 +228,14 @@ public:
 
     // Admin
     bool logInForAdmin();
-    
+
     // User
     void TestUser_Input();
     void addUser();
     void showTicketOfUser();
     void showPassenger();
     void addFeedback();
+    void showFeedbackOfPassenger();
 
     // Bus
     void addBed_car(Bed_Car a);
@@ -244,5 +246,5 @@ public:
     void showBus();
 
     // Menu
-	void CustomerMenu();
+    void CustomerMenu();
 };

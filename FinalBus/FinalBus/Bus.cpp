@@ -120,25 +120,25 @@ void Bus::SetSeats()
 void Bus::Install()// FOR ADMIN ONLY 
 {
 
-	cout << "Enter Bus No: ";
+	cout << "\t\t\tEnter Bus No: ";
 	cin >> Number;
 	cin.ignore();
 
-	cout << "\nEnter driver name: ";
+	cout << "\t\t\tEnter driver name: ";
 	getline(cin, Driver);
 
-	cout << "\nEnter Departure time: ";
+	cout << "\t\t\tEnter Departure time: ";
 	getline(cin, Departure);
 
-	cout << "\nGoing From: ";
+	cout << "\t\t\tGoing From: ";
 	getline(cin, From);
 
-	cout << "\nTo: ";
+	cout << "\t\t\tTo: ";
 	getline(cin, To);
 
 	SetSeats();
 
-	cout << "\nEnter Discount Voucher code: ";
+	cout << "\t\t\tEnter Discount Voucher code: ";
 	getline(cin, Voucher);
 
 
@@ -187,12 +187,12 @@ void Bus::Show()// Show for Customer
 		return;
 	}
 
-	cout << "Bus No: " << Number << endl;
+	cout << "\t\t\tBus No: " << Number << endl;
 	ShowName();
-	cout << "Driver: " << Driver << endl;
-	cout << "Going From " << From << " To " << To << endl;
-	cout << "Departure time: " << Departure << endl;
-	cout << "Seat Available: " << seatEmpty << endl;
+	cout << "\t\t\tDriver: " << Driver << endl;
+	cout << "\t\t\tGoing From " << From << " To " << To << endl;
+	cout << "\t\t\tDeparture time: " << Departure << endl;
+	cout << "\t\t\tSeat Available: " << seatEmpty << endl;
 	ShowPrice();
 }
 
@@ -250,19 +250,19 @@ string Bus::getNameOfTrip()
 	return From + " To " + To;
 }
 
-void Bus::Reserve(User &user)// For Customer
+void Bus::Reserve(User& user)// For Customer
 {
 	int Seat_no, num_of_people, Weight;
 	int bill;
 	string customer_Voucher, haystack;
 	vector<string>s_seats;
-	
+
 	if (seatEmpty == 0) {
-		cout << "Sorry! All of seats has already taken ! ";
+		cout << "\t\t\tSorry! All of seats has already taken ! ";
 		return;
 	}
 
-	cout << "What seat(s) you want to Reverse (You can pick multiple seat): ";
+	cout << "\t\t\tWhat seat(s) you want to Reverse (You can pick multiple seat): ";
 	getline(cin, haystack);
 
 	s_seats = split(haystack);
@@ -271,11 +271,11 @@ void Bus::Reserve(User &user)// For Customer
 	for (int i = 0; i < num_of_people; i++)
 	{
 		Seat_no = stoi(s_seats[i]);
-	top: 
+	top:
 		if (Seat_no > seat_max)
 		{
-			cout << "Seat " << Seat_no << " is out of max seats. Please try again. " << endl;
-			cout << "Seat: ";
+			cout << "\t\t\tSeat " << Seat_no << " is out of max seats. Please try again. " << endl;
+			cout << "\t\t\tSeat: ";
 			cin >> Seat_no;
 			cin.ignore();
 			cout << endl;
@@ -288,21 +288,21 @@ void Bus::Reserve(User &user)// For Customer
 		}
 		else
 		{
-			cout << "Seat " << Seat_no << " is already reverse. Please try again" << endl;
-			cout << "Seat: ";
+			cout << "\t\t\tSeat " << Seat_no << " is already reverse. Please try again" << endl;
+			cout << "\t\t\tSeat: ";
 			cin >> Seat_no;
 			cin.ignore();
 			goto top;
 		}
 
 	}
-	cout << "Enter Weight of your luggages: ";
+	cout << "\t\t\tEnter Weight of your luggages: ";
 	cin >> Weight;
 	user.setWeightOfGoods(Weight);
 	cin.ignore();
 
 	bill = (Price * num_of_people) + (Weight * priceGoods);
-	cout << "Enter Voucher(type no if you dont have): ";
+	cout << "\t\t\tEnter Voucher(type no if you dont have): ";
 	getline(cin, customer_Voucher);
 	if (customer_Voucher == Voucher) {
 		bill /= 2;
@@ -342,27 +342,27 @@ void Person::input()
 {
 	cin.ignore();
 
-	cout << "\nEnter Your Full Name: ";
+	cout << "\t\t\tEnter Your Full Name: ";
 	getline(cin, _name);
 
-	cout << "\nEnter Your Gender: ";
+	cout << "\t\t\tEnter Your Gender: ";
 	getline(cin, _sex);
 
-	cout << "\nEnter Your Year Of Birth: ";
+	cout << "\t\t\tEnter Your Year Of Birth: ";
 	cin >> _yearOfBirth;
 	cin.ignore();
 
-	cout << "\nEnter Your Telephone: ";
+	cout << "\t\t\tEnter Your Telephone: ";
 	getline(cin, _telephone);
 
-	cout << "\nEnter Your Email: ";
+	cout << "\t\t\tEnter Your Email: ";
 	getline(cin, _email);
 }
 
 void Person::output()
 {
-	cout << "Name: " << _name << endl;
-	cout << "Telephone: " << _telephone << endl;
+	cout << "\t\t\tName: " << _name << endl;
+	cout << "\t\t\tTelephone: " << _telephone << endl;
 }
 
 //User
@@ -371,7 +371,7 @@ User::User()
 	_totalOfMoney = _goods = 0;
 	username = password = _feedback = _typeOfBus = "";
 }
- 
+
 void User::input()
 {
 	Person::input();
@@ -380,9 +380,9 @@ void User::input()
 void User::output()
 {
 	Person::output();
-	cout << "Type of Bus: " << _typeOfBus << endl;
+	cout << "\t\t\tType of Bus: " << _typeOfBus << endl;
 	_ticket.output();
-	cout << "Total Of Money: " << _totalOfMoney << endl;
+	cout << "\t\t\tTotal Of Money: " << _totalOfMoney << endl;
 }
 
 string User::getNameUser()
@@ -420,6 +420,11 @@ void User::setNameOfTrip(string nameOfTrip)
 	_ticket.setNameOfTrip(nameOfTrip);
 }
 
+string User::getFeedBack()
+{
+	return _feedback;
+}
+
 // Tickets
 Ticket::Ticket()
 {
@@ -444,8 +449,8 @@ void Ticket::setDate(Date date)
 
 void Ticket::output()
 {
-	cout << "Name of Trip: " << _nameOfTrip << endl;
-	cout << "Seat Number(s): ";
+	cout << "\t\t\tName of Trip: " << _nameOfTrip << endl;
+	cout << "\t\t\tSeat Number(s): ";
 	for (int i = 0; i < seatNumbers.size(); i++) {
 		cout << seatNumbers[i] << " ";
 	}
@@ -463,7 +468,7 @@ void BusStation::printOutAccount()
 void BusStation::TestUser_Input()
 {
 	User person;
-	
+
 	person.input();
 
 	_user.push_back(person);
@@ -511,9 +516,11 @@ bool BusStation::logInForAdmin()
 
 	while (!validateAdmin) {
 		Draw("Log In For Admin  ");
+		GotoXY(50, 4);
 		cout << "Username: ";
 		cin >> username;
 		cin.ignore();
+		GotoXY(50, 5);
 		cout << "Password: ";
 		cin >> password;
 		for (int i = 0; i < _ad.size(); i++) {
@@ -524,14 +531,14 @@ bool BusStation::logInForAdmin()
 		}
 
 		if (!validateAdmin) {
-			cout << "Wrong Username or Password ! Please press Enter to try again ! " << "\n";
+			cout << "\t\t\tWrong Username or Password ! Please press Enter to try again ! " << "\n";
 			numberOfWrongInput++;
 			system("pause");
 		}
 
 		if (numberOfWrongInput == 3) {
 			system("cls");
-			cout << "You have entered wrong Username or Password 3 times ! Please press Enter to exit program ! " << "\n";
+			cout << "\t\t\tYou have entered wrong Username or Password 3 times ! Please press Enter to exit program ! " << "\n";
 			return false;
 		}
 
@@ -559,6 +566,7 @@ void BusStation::showTicketOfUser()
 void BusStation::showPassenger()
 {
 	for (int i = 0; i < _user.size(); i++) {
+		cout << "Customer #" << i + 1 << ": " << endl;
 		_user[i].output();
 		cout << "\n";
 	}
@@ -576,9 +584,17 @@ void BusStation::addFeedback()
 	cout << "Thanks for your feedback !!! ";
 }
 
+void BusStation::showFeedbackOfPassenger()
+{
+	for (int i = 0; i < _user.size(); i++) {
+		cout << "Customer #" << i + 1 << ": " << endl;
+		cout << _user[i].getFeedBack() << "\n";
+	}
+}
+
 void BusStation::AddCar()
 {
-	
+
 	int choice;
 	while (true)
 	{
@@ -599,7 +615,7 @@ void BusStation::AddCar()
 		cout << "Choice: ";
 		cin >> choice;
 		cin.ignore();
-		
+
 		if (choice == 5)
 		{
 			system("pause");
@@ -613,7 +629,7 @@ void BusStation::AddCar()
 		{
 			Draw("AdminSetup");
 			int Num;
-			cout << "Enter the number of bus you want to Install: ";
+			cout << "\t\tEnter the number of bus you want to Install: ";
 			cin >> Num;
 			cin.ignore();
 			cout << endl << endl;
@@ -636,10 +652,10 @@ void BusStation::AddCar()
 		}
 		case 2:
 		{
-			
+
 			Draw("AdminSetup");
 			int Num;
-			cout << "Enter number bus you want to Install: ";
+			cout << "\t\tEnter number bus you want to Install: ";
 			cin >> Num;
 			cin.ignore();
 			cout << endl << endl;
@@ -665,7 +681,7 @@ void BusStation::AddCar()
 		{
 			Draw("AdminSetup");
 			int Num;
-			cout << "Enter number bus you want to Install: ";
+			cout << "\t\tEnter number bus you want to Install: ";
 			cin >> Num;
 			cin.ignore();
 			for (int i = 0; i < Num; i++)
@@ -689,7 +705,7 @@ void BusStation::AddCar()
 		{
 			Draw("AdminSetup");
 			int Num;
-			cout << "Enter number of bus which you want to Install: ";
+			cout << "\t\tEnter number of bus which you want to Install: ";
 			cin >> Num;
 			cin.ignore();
 			cout << endl << endl;
@@ -718,8 +734,8 @@ void BusStation::AddCar()
 void BusStation::Rev()
 {
 	int Bus_no;
-	cout << "CUSTOMER: " << endl;
-	cout << "Buses availabile: " << endl;
+	Draw("CUSTOMER");
+	cout << "\t\tBuses availabile: " << endl;
 top1:
 	for (int i = 0; i < _bus.size(); i++)
 	{
@@ -727,7 +743,7 @@ top1:
 		cout << endl;
 	}
 	cout << endl;
-	cout << "Enter Bus No: ";
+	cout << "\t\tEnter Bus No: ";
 	cin >> Bus_no;
 	cin.ignore();
 	for (int i = 0; i < _bus.size(); i++)
@@ -737,12 +753,14 @@ top1:
 			_user[_user.size() - 1].setTypeOfBus(_bus[i]->getTypeOfBus());
 			_user[_user.size() - 1].setNameOfTrip(_bus[i]->getNameOfTrip());
 			system("cls");
+			ResizeConsole(1500, 500);
 			_bus[i]->ShowSeat();
-			_bus[i]->Reserve(_user[_user.size()-1]);
+			_bus[i]->Reserve(_user[_user.size() - 1]);
 			system("pause");
 			system("cls");
 			_bus[i]->ShowSeat();
 			system("pause");
+			ResizeConsole(1100, 500);
 			break;
 		}
 		else
@@ -755,7 +773,7 @@ top1:
 
 void BusStation::showBus()
 {
-	cout << "Buses availabile: " << endl;
+	Draw("Available Bus");
 	for (int i = 0; i < _bus.size(); i++)
 	{
 		_bus[i]->Show();
@@ -805,7 +823,7 @@ void BusStation::addVipCar(SuperVip c)
 	_bus[_bus.size() - 1]->setPriceOfBus(10000000);
 }
 
-void BusStation::CustomerMenu(){
+void BusStation::CustomerMenu() {
 	bool logIn = false;
 	int choiceForAdmin = 0, choiceForUser = 0, role = 0;
 	setAdmin();
@@ -824,12 +842,12 @@ void BusStation::CustomerMenu(){
 
 		if (role == 3) {
 			break;
-		} 
+		}
 		else if (role == 1) {
 			choiceForUser = 0;
 			system("cls");
 			while (choiceForUser != 4) {
-				Draw("User Reservation");
+				Draw("User Reservation ");
 				GotoXY(50, 4);
 				cout << "1. Book Ticket(s) " << endl;
 				GotoXY(50, 6);
@@ -845,7 +863,7 @@ void BusStation::CustomerMenu(){
 				switch (choiceForUser) {
 				case 1:
 					system("cls");
-					Draw("Customer Reservation");
+					Draw("Customer Reservation ");
 					addUser();
 					system("cls");
 					Rev();
@@ -858,6 +876,7 @@ void BusStation::CustomerMenu(){
 				case 3:
 					system("cls");
 					addFeedback();
+					system("pause");
 					break;
 				default:
 					break;
@@ -865,7 +884,7 @@ void BusStation::CustomerMenu(){
 				system("cls");
 			}
 			system("pause");
-		} 
+		}
 		else if (role == 2) {
 			choiceForAdmin = 0;
 			system("cls");
@@ -874,7 +893,7 @@ void BusStation::CustomerMenu(){
 			}
 			if (logIn) {
 				system("cls");
-				while (choiceForAdmin != 5) {
+				while (choiceForAdmin != 6) {
 					Draw("Admin Setup");
 					GotoXY(50, 4);
 					cout << "1. Add Bus " << endl;
@@ -883,10 +902,12 @@ void BusStation::CustomerMenu(){
 					GotoXY(50, 8);
 					cout << "3. Show Information Of Passenger(s) " << endl;
 					GotoXY(50, 10);
-					cout << "4. Log Out " << endl;
+					cout << "4. Show Feedback Of Passenger(s) " << endl;
 					GotoXY(50, 12);
-					cout << "5. Back" << endl;
+					cout << "5. Log Out " << endl;
 					GotoXY(50, 14);
+					cout << "6. Back" << endl;
+					GotoXY(50, 16);
 					cout << "Your choice: ";
 					cin >> choiceForAdmin;
 					switch (choiceForAdmin) {
@@ -905,6 +926,11 @@ void BusStation::CustomerMenu(){
 						system("pause");
 						break;
 					case 4:
+						system("cls");
+						showFeedbackOfPassenger();
+						system("pause");
+						break;
+					case 5:
 						system("cls");
 						logIn = false;
 						break;
