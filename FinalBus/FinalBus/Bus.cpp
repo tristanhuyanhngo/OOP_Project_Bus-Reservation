@@ -136,15 +136,8 @@ void Bus::Install()// FOR ADMIN ONLY
 	cout << "\nTo: ";
 	getline(cin, To);
 
-	cout << "\nEnter Price: ";
-	cin >> Price;
-	cin.ignore();
-
-	cout << "\nEnter Seat Rows and Cols: ";
-	cin >> Row >> Col;
-	cin.ignore();
 	SetSeats();
-	seatEmpty = seat_max = Row * Col;
+
 	cout << "\nEnter Discount Voucher code: ";
 	getline(cin, Voucher);
 
@@ -228,6 +221,23 @@ void Bus::NameRev(string Name, int Seat)
 				Seats[i][j] = Name;
 			Num++;
 		}
+}
+
+void Bus::setNameOfBus(string name)
+{
+	_name = name;
+}
+
+void Bus::setPriceOfBus(int price)
+{
+	Price = price;
+}
+
+void Bus::setSeatOfBus(int row, int column)
+{
+	Row = row;
+	Col = column;
+	seatEmpty = seat_max = Row * Col;
 }
 
 string Bus::getTypeOfBus()
@@ -554,6 +564,18 @@ void BusStation::showPassenger()
 	}
 }
 
+void BusStation::addFeedback()
+{
+	string feedback;
+	cin.ignore();
+	cout << "Please type feedback to here: ";
+	getline(cin, feedback);
+
+	_user[_user.size() - 1].addFeedBack(feedback);
+
+	cout << "Thanks for your feedback !!! ";
+}
+
 void BusStation::AddCar()
 {
 	
@@ -598,11 +620,12 @@ void BusStation::AddCar()
 			for (int i = 0; i < Num; i++)
 			{
 				Bus a;
+				a.setSeatOfBus(4, 8);
 				a.Install();
 				_bus.push_back(new Bus(a));
+				_bus[_bus.size() - 1]->setPriceOfBus(200000);
 				system("pause");
 				system("cls");
-				
 				Draw("AdminSetup");
 			}
 			cout << endl;
@@ -613,6 +636,7 @@ void BusStation::AddCar()
 		}
 		case 2:
 		{
+			
 			Draw("AdminSetup");
 			int Num;
 			cout << "Enter number bus you want to Install: ";
@@ -622,6 +646,7 @@ void BusStation::AddCar()
 			for (int i = 0; i < Num; i++)
 			{
 				Bed_Car b(i + 1);
+				b.setSeatOfBus(2, 8);
 				b.Install();
 				addBed_car(b);
 				system("pause");
@@ -646,6 +671,7 @@ void BusStation::AddCar()
 			for (int i = 0; i < Num; i++)
 			{
 				VIP c(i + 1);
+				c.setSeatOfBus(2, 4);
 				c.Install();
 				addVip(c);
 				system("pause");
@@ -670,6 +696,7 @@ void BusStation::AddCar()
 			for (int i = 0; i < Num; i++)
 			{
 				SuperVip d(i + 1);
+				d.setSeatOfBus(2, 2);
 				d.Install();
 				addVipCar(d);
 				system("pause");
@@ -760,21 +787,28 @@ string Admin::getPassword()
 void BusStation::addBed_car(Bed_Car a)
 {
 	_bus.push_back(new Bed_Car(a));
+	_bus[_bus.size() - 1]->setNameOfBus("Bed Car");
+	_bus[_bus.size() - 1]->setPriceOfBus(400000);
 }
 
 void BusStation::addVip(VIP b)
 {
 	_bus.push_back(new VIP(b));
+	_bus[_bus.size() - 1]->setNameOfBus("Vip Car");
+	_bus[_bus.size() - 1]->setPriceOfBus(3000000);
 }
 
 void BusStation::addVipCar(SuperVip c)
 {
 	_bus.push_back(new SuperVip(c));
+	_bus[_bus.size() - 1]->setNameOfBus("Super Vip Car");
+	_bus[_bus.size() - 1]->setPriceOfBus(10000000);
 }
 
 void BusStation::CustomerMenu(){
-
+	bool logIn = false;
 	int choiceForAdmin = 0, choiceForUser = 0, role = 0;
+	setAdmin();
 
 	while (role != 3) {
 		Draw("BUS RESERVATION SYSTEM ");
@@ -792,18 +826,19 @@ void BusStation::CustomerMenu(){
 			break;
 		} 
 		else if (role == 1) {
+			choiceForUser = 0;
 			system("cls");
 			while (choiceForUser != 4) {
 				Draw("User Reservation");
 				GotoXY(50, 4);
 				cout << "1. Book Ticket(s) " << endl;
-				GotoXY(50, 10);
+				GotoXY(50, 6);
 				cout << "2. Show Information Of Ticket(s) " << endl;
-				GotoXY(50, 12);
+				GotoXY(50, 8);
 				cout << "3. Add Feedback " << endl;
-				GotoXY(50, 14);
-				cout << "4. Exit " << endl;
-				GotoXY(50, 16);
+				GotoXY(50, 10);
+				cout << "4. Back " << endl;
+				GotoXY(50, 12);
 				cout << "Your choice: ";
 				cin >> choiceForUser;
 
@@ -822,6 +857,7 @@ void BusStation::CustomerMenu(){
 					break;
 				case 3:
 					system("cls");
+					addFeedback();
 					break;
 				default:
 					break;
@@ -831,9 +867,12 @@ void BusStation::CustomerMenu(){
 			system("pause");
 		} 
 		else if (role == 2) {
+			choiceForAdmin = 0;
 			system("cls");
-			setAdmin();
-			if (logInForAdmin()) {
+			if (!logIn) {
+				logIn = logInForAdmin();
+			}
+			if (logIn) {
 				system("cls");
 				while (choiceForAdmin != 5) {
 					Draw("Admin Setup");
@@ -846,7 +885,7 @@ void BusStation::CustomerMenu(){
 					GotoXY(50, 10);
 					cout << "4. Log Out " << endl;
 					GotoXY(50, 12);
-					cout << "5. Exit" << endl;
+					cout << "5. Back" << endl;
 					GotoXY(50, 14);
 					cout << "Your choice: ";
 					cin >> choiceForAdmin;
@@ -867,6 +906,7 @@ void BusStation::CustomerMenu(){
 						break;
 					case 4:
 						system("cls");
+						logIn = false;
 						break;
 					default:
 						break;

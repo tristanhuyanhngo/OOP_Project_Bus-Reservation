@@ -128,6 +128,9 @@ public:
     void ShowSeat();
     bool CheckEmpty(int No);
     void NameRev(string name, int Seat);
+    void setNameOfBus(string name);
+    void setPriceOfBus(int price);
+    void setSeatOfBus(int row, int column);
     string getTypeOfBus();
     string getNameOfTrip();
     Bus();
@@ -230,6 +233,7 @@ public:
     void addUser();
     void showTicketOfUser();
     void showPassenger();
+    void addFeedback();
 
     // Bus
     void addBed_car(Bed_Car a);
